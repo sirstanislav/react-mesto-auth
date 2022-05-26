@@ -23,7 +23,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       container="popup__container_update-avatar"
     >
       <input
-        className="popup__input popup__update-avatar"
+        className="popup__input"
         ref={inputRef}
         name="update-avatar"
         type="url"

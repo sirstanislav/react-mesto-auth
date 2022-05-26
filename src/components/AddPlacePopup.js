@@ -38,7 +38,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       container=""
     >
       <input
-        className="popup__input popup__input_image_name"
+        className="popup__input"
         onChange={inputName}
         value={name}
         name="image-name"
@@ -50,7 +50,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       />
       <span className="popup__error"></span>
       <input
-        className="popup__input popup__input_image_link"
+        className="popup__input"
         onChange={inputLink}
         value={link}
         name="image-link"

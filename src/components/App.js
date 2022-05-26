@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -9,8 +10,10 @@ import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import Login from "./Login";
 
 function App() {
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(true);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -122,7 +125,7 @@ function App() {
       <Header />
 
       <CurrentUserContext.Provider value={currentUser}>
-        <Main //Main
+        <Main
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
@@ -155,6 +158,10 @@ function App() {
           onClose={handleCloseAllPopups}
           onDelete={setConfirmDelete}
         />
+
+        <Login isOpen={isLoginPopupOpen} />
+        {/* <Register />
+          <InfoTooltip /> */}
       </CurrentUserContext.Provider>
 
       <Footer />

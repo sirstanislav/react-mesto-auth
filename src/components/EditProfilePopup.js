@@ -40,7 +40,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       container=""
     >
       <input
-        className="popup__input popup__input_profile_name"
+        className="popup__input"
         value={name}
         onChange={inputName}
         name="name"
@@ -52,7 +52,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       />
       <span className="popup__error"></span>
       <input
-        className="popup__input popup__input_profile_about"
+        className="popup__input"
         value={description}
         onChange={inputDescription}
         name="about"
