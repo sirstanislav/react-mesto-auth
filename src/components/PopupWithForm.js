@@ -3,14 +3,12 @@ function PopupWithForm({
   isOpen,
   container,
   title,
-  button,
   onClose,
   children,
   onSubmit,
-  styleConfirmDelete,
   title_auth,
-  popup__save_auth,
   popup__close_none,
+  popup__subtitle,
 }) {
   return (
     <section className={`popup ${isOpen && "popup_enable"}`}>
@@ -18,12 +16,7 @@ function PopupWithForm({
         <h2 className={`popup__title ${title_auth}`}>{title}</h2>
         <form className="popup__form" name={name} onSubmit={onSubmit}>
           {children}
-          <button
-            className={`popup__save ${styleConfirmDelete} ${popup__save_auth}`}
-            type="submit"
-          >
-            {button}
-          </button>
+          {popup__subtitle}
         </form>
         <button
           style={popup__close_none}

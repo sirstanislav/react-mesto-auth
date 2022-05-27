@@ -11,9 +11,13 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Login from "./Login";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(true);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -160,8 +164,8 @@ function App() {
         />
 
         <Login isOpen={isLoginPopupOpen} />
-        {/* <Register />
-          <InfoTooltip /> */}
+        <Register isOpen={isRegisterPopupOpen} />
+        <InfoTooltip isOpen={isInfoTooltip} />
       </CurrentUserContext.Provider>
 
       <Footer />

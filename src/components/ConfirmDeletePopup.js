@@ -15,9 +15,14 @@ export default function ConfirmDeletePopup({ isOpen, onClose, onDelete }) {
       onSubmit={handleSubmit}
       name="confirm-delete"
       title="Вы уверены?"
-      button="Да"
       container="popup__container_confirm-delete"
-      styleConfirmDelete="popup__save_confirm-delete"
-    />
+    >
+      <button
+        className={"popup__save popup__save_confirm-delete"}
+        type="submit"
+      >
+        Да
+      </button>
+    </PopupWithForm>
   );
 }

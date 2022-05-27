@@ -1,17 +1,20 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function Login({ isOpen }) {
+export default function Register({ isOpen }) {
   return (
     <PopupWithForm
       isOpen={isOpen}
       // onClose={onClose}
       // onSubmit={handleSubmit}
-      title="Вход"
-      button="Войти"
+      name="edit-profile"
+      title="Регистрация"
       container="popup__container_auth"
       title_auth="popup__title_auth"
       popup__close_none={{ display: "none" }}
+      popup__subtitle={
+        <p className="popup__subtitle">Уже зарегистрированы? Войти</p>
+      }
     >
       <input
         className="popup__input popup__input_auth"
@@ -38,7 +41,7 @@ export default function Login({ isOpen }) {
       />
       <span className="popup__error"></span>
       <button className={"popup__save popup__save_auth"} type="submit">
-        Войти
+        Зарегистрироваться
       </button>
     </PopupWithForm>
   );

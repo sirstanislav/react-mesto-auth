@@ -36,7 +36,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       onSubmit={handleSubmit}
       name="edit-profile"
       title="Редактировать профиль"
-      button="Сохранить"
       container=""
     >
       <input
@@ -63,6 +62,12 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         required
       />
       <span className="popup__error"></span>
+      <button
+        className={"popup__save"}
+        type="submit"
+      >
+        Сохранить
+      </button>
     </PopupWithForm>
   );
 }

@@ -34,7 +34,6 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onSubmit={handleSubmit}
       name="add-image"
       title="Новое место"
-      button="Создать"
       container=""
     >
       <input
@@ -59,6 +58,12 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         required
       />
       <span className="popup__error"></span>
+      <button
+        className={"popup__save"}
+        type="submit"
+      >
+        Создать
+      </button>
     </PopupWithForm>
   );
 }
