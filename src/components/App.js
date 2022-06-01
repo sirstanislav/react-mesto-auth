@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -15,8 +15,8 @@ import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 
 function App() {
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(true);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(true);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -26,6 +26,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -126,18 +127,62 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
-
       <CurrentUserContext.Provider value={currentUser}>
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+              {isUserLoggedIn ? <Navigate to="/"/> : <Navigate to="/sign-up"/>}
+                <Header>
+                  <div className="header__container-auth">
+                    <p className="header__email">email@mail.com</p>
+                    <p className="header__title">Выйти</p>
+                  </div>
+                </Header>
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  cards={cards}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                />
+                <Footer />
+              </>
+            }
+          >
+          </Route>
+          <Route
+            path="/sign-up"
+            element={
+              <>
+                <Login isOpen={isLoginPopupOpen} />
+                <Header>
+                  <div className="header__container-auth">
+                    <p className="header__title">Регистрация</p>
+                  </div>
+                </Header>
+              </>
+            }
+          />
+          <Route
+            path="/sign-in"
+            element={
+              <>
+                <Register isOpen={isRegisterPopupOpen} />
+                <Header>
+                  <div className="header__container-auth">
+                    <Link to="/" className="header__title">
+                      Войти
+                    </Link>
+                  </div>
+                </Header>
+              </>
+            }
+          />
+        </Routes>
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
@@ -163,12 +208,8 @@ function App() {
           onDelete={setConfirmDelete}
         />
 
-        <Login isOpen={isLoginPopupOpen} />
-        <Register isOpen={isRegisterPopupOpen} />
         <InfoTooltip isOpen={isInfoTooltip} />
       </CurrentUserContext.Provider>
-
-      <Footer />
 
       <ImagePopup card={selectedCard} onClose={handleCloseAllPopups} />
     </div>
