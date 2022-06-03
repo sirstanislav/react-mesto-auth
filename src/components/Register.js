@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PopupWithForm from "./PopupWithForm";
 
 export default function Register({ isOpen }) {
@@ -7,14 +8,17 @@ export default function Register({ isOpen }) {
       isOpen={isOpen}
       // onClose={onClose}
       // onSubmit={handleSubmit}
-      name="edit-profile"
+      // name="edit-profile"
       title="Регистрация"
       container="popup__container_auth"
       title_auth="popup__title_auth"
       popup__close_none={{ display: "none" }}
       popup__subtitle={
-        <p className="popup__subtitle">Уже зарегистрированы? Войти</p>
+        <Link to="/sign-up" className="popup__subtitle">
+          Уже зарегистрированы? Войти
+        </Link>
       }
+      popup_auth="popup_auth"
     >
       <input
         className="popup__input popup__input_auth"

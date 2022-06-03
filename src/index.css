@@ -32,6 +32,7 @@
 @import url(./blocks/footer/__author/footer__author.css);
 
 @import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_auth/popup_auth.css);
 @import url(./blocks/popup/_enable/popup_enable.css);
 @import url(./blocks/popup/_image-view/popup_image-view.css);
 

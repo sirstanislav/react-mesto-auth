@@ -12,6 +12,7 @@ export default function Login({ isOpen }) {
       container="popup__container_auth"
       title_auth="popup__title_auth"
       popup__close_none={{ display: "none" }}
+      popup_auth="popup_auth"
     >
       <input
         className="popup__input popup__input_auth"

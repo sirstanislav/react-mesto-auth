@@ -13,6 +13,7 @@ import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(true);
@@ -26,7 +27,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -130,30 +131,41 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route
+            exact
             path="/"
             element={
-              <>
-              {isUserLoggedIn ? <Navigate to="/"/> : <Navigate to="/sign-up"/>}
-                <Header>
-                  <div className="header__container-auth">
-                    <p className="header__email">email@mail.com</p>
-                    <p className="header__title">Выйти</p>
-                  </div>
-                </Header>
-                <Main
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onCardClick={handleCardClick}
-                  cards={cards}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleCardDelete}
-                />
-                <Footer />
-              </>
+              isUserLoggedIn ? (
+                <Navigate to="/main" />
+              ) : (
+                <Navigate to="/sign-up" />
+              )
             }
-          >
-          </Route>
+          />
+          <Route
+            path="/main/*"
+            element={
+              <ProtectedRoute loggedIn={isUserLoggedIn}>
+                  <Header>
+                    <div className="header__container-auth">
+                      <p className="header__email">email@mail.com</p>
+                      <Link to="/" className="header__title">
+                        Выйти
+                      </Link>
+                    </div>
+                  </Header>
+                  <Main
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick}
+                    cards={cards}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                  />
+                  <Footer />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/sign-up"
             element={
@@ -161,7 +173,9 @@ function App() {
                 <Login isOpen={isLoginPopupOpen} />
                 <Header>
                   <div className="header__container-auth">
-                    <p className="header__title">Регистрация</p>
+                    <Link to="/sign-in" className="header__title">
+                      Регистрация
+                    </Link>
                   </div>
                 </Header>
               </>
@@ -174,7 +188,7 @@ function App() {
                 <Register isOpen={isRegisterPopupOpen} />
                 <Header>
                   <div className="header__container-auth">
-                    <Link to="/" className="header__title">
+                    <Link to="/sign-up" className="header__title">
                       Войти
                     </Link>
                   </div>
