@@ -30,10 +30,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         required
       />
       <span className="popup__error"></span>
-      <button
-        className={"popup__save"}
-        type="submit"
-      >
+      <button className={"popup__save"} type="submit">
         Сохранить
       </button>
     </PopupWithForm>

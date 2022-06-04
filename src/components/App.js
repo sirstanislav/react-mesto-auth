@@ -113,13 +113,24 @@ function App() {
       .catch((err) => console.log(`Ошибка загрузки аватара: ${err}`));
   }
 
-  function handleLogin() {
-    setIsUserLoggedIn(true);
+  function handleLogin(password, email) {
+    return Auth.autorisation(password, email).then((data) => {
+      if (data.token) {
+        localStorage.setItem("jwt", data.token);
+        tokenCheck();
+      }
+    });
+  }
+
+  function handleRegister(password, email) {
+    return Auth.register(password, email).then(() => {
+      history("/sing-up"); //Если форма отправлена успешна, перенаправим пользователя на страницу авторизации.
+    });
   }
 
   function tokenCheck() {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
       Auth.token(jwt).then((res) => {
         if (res) {
           const userData = {
@@ -127,19 +138,21 @@ function App() {
           };
           setEmail(userData.email);
           setIsUserLoggedIn(true);
-          history("/main");
         }
       });
     }
   }
 
-  console.log(localStorage)
-  console.log(isUserLoggedIn)
+  function handleOnClick() {
+    setIsUserLoggedIn(false);
+    localStorage.removeItem("jwt");
+  }
 
-  // function signOut() {
-  //   localStorage.removeItem("jwt");
-  //   history("/sing-up");
-  // }
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      history("/main");
+    }
+  }, [isUserLoggedIn]);
 
   useEffect(() => {
     tokenCheck();
@@ -180,7 +193,13 @@ function App() {
                 <Header>
                   <div className="header__container-auth">
                     <p className="header__email">{email}</p>
-                    <p className="header__title">Выйти</p>
+                    <Link
+                      to="/"
+                      onClick={handleOnClick}
+                      className="header__title"
+                    >
+                      Выйти
+                    </Link>
                   </div>
                 </Header>
                 <Main
@@ -215,7 +234,10 @@ function App() {
             path="/sign-in"
             element={
               <>
-                <Register isOpen={isRegisterPopupOpen} />
+                <Register
+                  isOpen={isRegisterPopupOpen}
+                  handleRegister={handleRegister}
+                />
                 <Header>
                   <div className="header__container-auth">
                     <Link to="/sign-up" className="header__title">

@@ -9,7 +9,7 @@ function PopupWithForm({
   title_auth,
   popup__close_none,
   popup__subtitle,
-  popup_auth
+  popup_auth,
 }) {
   return (
     <section className={`popup ${isOpen && "popup_enable"} ${popup_auth}`}>

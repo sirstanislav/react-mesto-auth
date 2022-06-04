@@ -1,12 +1,11 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PopupWithForm from "./PopupWithForm";
-import * as Auth from "./Auth.js";
 
 export default function Login({ isOpen, handleLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   function inputEmail(event) {
     setEmail(event.target.value);
@@ -22,13 +21,9 @@ export default function Login({ isOpen, handleLogin }) {
     if (!email || !password) {
       return;
     }
-    Auth.autorisation(password, email).then((data) => {
-      if (data) {
-        setPassword("");
-        setEmail("");
-        handleLogin();
-        history("/main");
-      }
+
+    handleLogin(password, email).catch((error) => {
+      setErrorMessage(error.message);
     });
   }
 
@@ -55,7 +50,7 @@ export default function Login({ isOpen, handleLogin }) {
         maxLength="40"
         required
       />
-      <span className="popup__error"></span>
+      <span className="popup__error">{errorMessage}</span>
       <input
         className="popup__input popup__input_auth"
         // value={description}
@@ -67,7 +62,7 @@ export default function Login({ isOpen, handleLogin }) {
         maxLength="200"
         required
       />
-      <span className="popup__error"></span>
+      <span className="popup__error">{errorMessage}</span>
       <button className={"popup__save popup__save_auth"} type="submit">
         Войти
       </button>

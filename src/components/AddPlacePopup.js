@@ -58,10 +58,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         required
       />
       <span className="popup__error"></span>
-      <button
-        className={"popup__save"}
-        type="submit"
-      >
+      <button className={"popup__save"} type="submit">
         Создать
       </button>
     </PopupWithForm>

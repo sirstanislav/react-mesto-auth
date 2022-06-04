@@ -62,10 +62,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         required
       />
       <span className="popup__error"></span>
-      <button
-        className={"popup__save"}
-        type="submit"
-      >
+      <button className={"popup__save"} type="submit">
         Сохранить
       </button>
     </PopupWithForm>
