@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -14,6 +14,7 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
+import * as Auth from "./Auth.js";
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(true);
@@ -28,6 +29,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [email, setEmail] = useState();
+  const history = useNavigate();
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -52,22 +55,6 @@ function App() {
       })
       .catch((err) => console.log(`Ошибка.....: ${err}`));
   }
-
-  useEffect(() => {
-    api
-      .getCardList()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(`Ошибка загрузки карточек: ${err}`));
-
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => console.log(`Ошибка.....: ${err}`));
-  }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -126,6 +113,51 @@ function App() {
       .catch((err) => console.log(`Ошибка загрузки аватара: ${err}`));
   }
 
+  function handleLogin() {
+    setIsUserLoggedIn(true);
+  }
+
+  function tokenCheck() {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      Auth.token(jwt).then((res) => {
+        if (res) {
+          const userData = {
+            email: res.data.email,
+          };
+          setEmail(userData.email);
+          setIsUserLoggedIn(true);
+          history("/main");
+        }
+      });
+    }
+  }
+
+  console.log(localStorage)
+  console.log(isUserLoggedIn)
+
+  // function signOut() {
+  //   localStorage.removeItem("jwt");
+  //   history("/sing-up");
+  // }
+
+  useEffect(() => {
+    tokenCheck();
+    api
+      .getCardList()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => console.log(`Ошибка загрузки карточек: ${err}`));
+
+    api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(`Ошибка.....: ${err}`));
+  }, []);
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -142,27 +174,25 @@ function App() {
             }
           />
           <Route
-            path="/main/*"
+            path="*"
             element={
               <ProtectedRoute loggedIn={isUserLoggedIn}>
-                  <Header>
-                    <div className="header__container-auth">
-                      <p className="header__email">email@mail.com</p>
-                      <Link to="/" className="header__title">
-                        Выйти
-                      </Link>
-                    </div>
-                  </Header>
-                  <Main
-                    onEditProfile={handleEditProfileClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onEditAvatar={handleEditAvatarClick}
-                    onCardClick={handleCardClick}
-                    cards={cards}
-                    onCardLike={handleCardLike}
-                    onCardDelete={handleCardDelete}
-                  />
-                  <Footer />
+                <Header>
+                  <div className="header__container-auth">
+                    <p className="header__email">{email}</p>
+                    <p className="header__title">Выйти</p>
+                  </div>
+                </Header>
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  cards={cards}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                />
+                <Footer />
               </ProtectedRoute>
             }
           />
@@ -170,7 +200,7 @@ function App() {
             path="/sign-up"
             element={
               <>
-                <Login isOpen={isLoginPopupOpen} />
+                <Login isOpen={isLoginPopupOpen} handleLogin={handleLogin} />
                 <Header>
                   <div className="header__container-auth">
                     <Link to="/sign-in" className="header__title">

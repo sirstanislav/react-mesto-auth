@@ -1,13 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { React, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import PopupWithForm from "./PopupWithForm";
+import * as Auth from "./Auth.js";
 
 export default function Register({ isOpen }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useNavigate();
+
+  function inputEmail(event) {
+    setEmail(event.target.value);
+  }
+
+  function inputPassword(event) {
+    setPassword(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    Auth.register(password, email).then((res) => {
+      if (res) {
+        // setMessage('')
+        history("/sing-up"); //Если форма отправлена успешна, перенаправим пользователя на страницу авторизации.
+      }
+    });
+  }
+
   return (
     <PopupWithForm
       isOpen={isOpen}
       // onClose={onClose}
-      // onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       // name="edit-profile"
       title="Регистрация"
       container="popup__container_auth"
@@ -23,10 +47,10 @@ export default function Register({ isOpen }) {
       <input
         className="popup__input popup__input_auth"
         // value={name}
-        // onChange={inputName}
+        onChange={inputEmail}
         name="name"
         type="text"
-        placeholder="Имя"
+        placeholder="Email"
         minLength="2"
         maxLength="40"
         required
@@ -35,10 +59,10 @@ export default function Register({ isOpen }) {
       <input
         className="popup__input popup__input_auth"
         // value={description}
-        // onChange={inputDescription}
+        onChange={inputPassword}
         name="about"
         type="text"
-        placeholder="О себе"
+        placeholder="Пароль"
         minLength="2"
         maxLength="200"
         required
