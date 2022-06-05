@@ -120,7 +120,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-          checkToken();
+          setIsUserLoggedIn(true)
         }
       })
       .catch((error) => {
@@ -164,27 +164,27 @@ function App() {
 
   useEffect(() => {
     if (isUserLoggedIn) {
+      api
+        .getCardList()
+        .then((res) => {
+          setCards(res);
+        })
+        .catch((err) => console.log(`Ошибка загрузки карточек: ${err}`));
+
+      api
+        .getUserInfo()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch((err) =>
+          console.log(`Ошибка получения информации профиля: ${err}`)
+        );
       history("/");
     }
   }, [isUserLoggedIn]);
 
   useEffect(() => {
     checkToken();
-    api
-      .getCardList()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.log(`Ошибка загрузки карточек: ${err}`));
-
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) =>
-        console.log(`Ошибка получения информации профиля: ${err}`)
-      );
   }, []);
 
   return (
