@@ -43,8 +43,8 @@ export default function Login({ isOpen, handleLogin, errorMessage }) {
           <input
             className="popup__input popup__input_auth"
             onChange={inputPassword}
-            name="about"
-            type="text"
+            name="password"
+            type="password"
             placeholder="Пароль"
             minLength="2"
             maxLength="200"

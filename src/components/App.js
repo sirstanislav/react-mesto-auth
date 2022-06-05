@@ -120,7 +120,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-          setIsUserLoggedIn(true)
+          setIsUserLoggedIn(true);
         }
       })
       .catch((error) => {
@@ -185,7 +185,7 @@ function App() {
 
   useEffect(() => {
     checkToken();
-  }, []);
+  });
 
   return (
     <div className="page">
@@ -265,10 +265,9 @@ function App() {
           onClose={handleCloseAllPopups}
           onDelete={setConfirmDelete}
         />
-
-        <InfoTooltip isOpen={isInfoTooltip} onClose={handleCloseAllPopups} />
       </CurrentUserContext.Provider>
 
+      <InfoTooltip isOpen={isInfoTooltip} onClose={handleCloseAllPopups} />
       <ImagePopup card={selectedCard} onClose={handleCloseAllPopups} />
     </div>
   );
