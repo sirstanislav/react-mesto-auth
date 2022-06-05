@@ -1,10 +1,10 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Routes, Navigate, Route } from "react-router-dom";
 
-export default function ProtectedRoute({ loggedIn, children }) {
-  if (!loggedIn) {
-    return <Navigate to="/" replace />;
-  }
-
-  return children;
+export default function ProtectedRoute({ loggedIn, children, path }) {
+  return (
+    <Routes>
+      <Route path={path} element={loggedIn ? children : <Navigate to='/sign-in' />} />
+    </Routes>
+  );
 }

@@ -2,10 +2,9 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PopupWithForm from "./PopupWithForm";
 
-export default function Login({ isOpen, handleLogin }) {
+export default function Login({ isOpen, handleLogin, errorMessage }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   function inputEmail(event) {
     setEmail(event.target.value);
@@ -22,50 +21,41 @@ export default function Login({ isOpen, handleLogin }) {
       return;
     }
 
-    handleLogin(password, email).catch((error) => {
-      setErrorMessage(error.message);
-    });
+    handleLogin(password, email);
   }
 
   return (
-    <PopupWithForm
-      isOpen={isOpen}
-      // onClose={onClose}
-      onSubmit={handleSubmit}
-      title="Вход"
-      button="Войти"
-      container="popup__container_auth"
-      title_auth="popup__title_auth"
-      popup__close_none={{ display: "none" }}
-      popup_auth="popup_auth"
-    >
-      <input
-        className="popup__input popup__input_auth"
-        // value={name}
-        onChange={inputEmail}
-        name="name"
-        type="text"
-        placeholder="Email"
-        minLength="2"
-        maxLength="40"
-        required
-      />
-      <span className="popup__error">{errorMessage}</span>
-      <input
-        className="popup__input popup__input_auth"
-        // value={description}
-        onChange={inputPassword}
-        name="about"
-        type="text"
-        placeholder="Пароль"
-        minLength="2"
-        maxLength="200"
-        required
-      />
-      <span className="popup__error">{errorMessage}</span>
-      <button className={"popup__save popup__save_auth"} type="submit">
-        Войти
-      </button>
-    </PopupWithForm>
+    <section className={`popup ${isOpen && "popup_enable"} popup_auth`}>
+      <div className={"popup__container popup__container_auth"}>
+        <h2 className={"popup__title popup__title_auth"}>Вход</h2>
+        <form className="popup__form" name="login" onSubmit={handleSubmit}>
+          <input
+            className="popup__input popup__input_auth"
+            onChange={inputEmail}
+            name="name"
+            type="text"
+            placeholder="Email"
+            minLength="2"
+            maxLength="40"
+            required
+          />
+          <span className="popup__error">{errorMessage}</span>
+          <input
+            className="popup__input popup__input_auth"
+            onChange={inputPassword}
+            name="about"
+            type="text"
+            placeholder="Пароль"
+            minLength="2"
+            maxLength="200"
+            required
+          />
+          <span className="popup__error">{errorMessage}</span>
+          <button className={"popup__save popup__save_auth"} type="submit">
+            Войти
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }

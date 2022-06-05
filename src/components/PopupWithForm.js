@@ -6,18 +6,14 @@ function PopupWithForm({
   onClose,
   children,
   onSubmit,
-  title_auth,
   popup__close_none,
-  popup__subtitle,
-  popup_auth,
 }) {
   return (
-    <section className={`popup ${isOpen && "popup_enable"} ${popup_auth}`}>
+    <section className={`popup ${isOpen && "popup_enable"}`}>
       <div className={`popup__container ${container}`}>
-        <h2 className={`popup__title ${title_auth}`}>{title}</h2>
+        <h2 className={"popup__title"}>{title}</h2>
         <form className="popup__form" name={name} onSubmit={onSubmit}>
           {children}
-          {popup__subtitle}
         </form>
         <button
           style={popup__close_none}
