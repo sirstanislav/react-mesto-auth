@@ -118,8 +118,10 @@ function App() {
   function handleLogin(password, email) {
     return Auth.autorisation(password, email)
       .then((data) => {
+        console.log(data)
         if (data.token) {
           localStorage.setItem("jwt", data.token);
+          setEmail(email)
           setIsUserLoggedIn(true);
         }
       })
@@ -185,7 +187,7 @@ function App() {
 
   useEffect(() => {
     checkToken();
-  });
+  }, []);
 
   return (
     <div className="page">

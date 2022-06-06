@@ -17,10 +17,6 @@ export default function Login({ isOpen, handleLogin, errorMessage }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!email || !password) {
-      return;
-    }
-
     handleLogin(password, email);
   }
 
@@ -32,7 +28,7 @@ export default function Login({ isOpen, handleLogin, errorMessage }) {
           <input
             className="popup__input popup__input_auth"
             onChange={inputEmail}
-            name="name"
+            name="email"
             type="text"
             placeholder="Email"
             minLength="2"
