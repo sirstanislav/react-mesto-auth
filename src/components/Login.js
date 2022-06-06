@@ -1,6 +1,4 @@
 import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PopupWithForm from "./PopupWithForm";
 
 export default function Login({ isOpen, handleLogin, errorMessage }) {
   const [email, setEmail] = useState("");
