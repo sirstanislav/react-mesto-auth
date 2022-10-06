@@ -1,8 +1,6 @@
 # Project: Mesto-React-Auth
 
-Here is React project with authorization and registration. Use your previous work on the Mesto project. It can be the work of the 11th sprint or its improved version after the last 2 sprints.
-
-All requests for authorization, registration and token verification work through the `https://auth.nomoreparties.co service`.
+Mesto - an interactive page where you can register users, add photos, delete them, and like them. All requests for authorization, registration and token verification work through the `https://auth.nomoreparties.co service`.
 
 The project is written in `HTML`, `CSS`, `JSX` using `React Fraemwork`. To building the SPA was used the `BEM` methodology. Data came from the server and was sent to it through a class component using `RestAPI`.
 
